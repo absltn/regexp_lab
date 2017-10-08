@@ -4,26 +4,54 @@ import java.util.regex.Pattern;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.String;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TextWatcher {
     public static void main(String[] args) throws IOException {
         System.out.println("Results of checking:");
         String fileName = "C:/users/airliq/desktop/regTest.txt";
-        int result[]={0,0,0};
+        int result[]={0,0,0,0};
         String content = null;
         content = readUsingFiles(fileName);
         String [] words = content.split ("([\\s/.,]+)");
+        List<String> other = new ArrayList<String>();
+        List<String> adverbs = new ArrayList<String>();
+        List<String> verbs = new ArrayList<String>();
+        List<String> adjectives = new ArrayList<String>();
 
         for (int i=0; i<words.length;i++)
-            if (checkForAdj(words[i]) ) 
+            if (checkForAdj(words[i]) ) {
                 result[0]++;
-
-            else if (checkForVerb(words[i]))
+                adjectives.add(words[i]);
+            }
+            else if (checkForVerb(words[i])){
                 result[1]++;
-            else if (checkForAdverb(words[i]))
+                verbs.add(words[i]);
+            }
+            else if (checkForAdverb(words[i])) {
                 result[2]++;
-        System.out.printf("В данном тексте примерно %d прилагательных, %d глаголов и " +
-                "%d наречий.",result[0],result[1],result[2]);
+                adverbs.add(words[i]);
+            }
+            else {
+                result[3]++;
+                other.add(words[i]);
+            }
+        System.out.printf("В данном тексте примерно %d прилагательных, %d глаголов,\n" +
+                "%d наречий и %d других хоть-сколько значимых слов.\n",result[0],result[1],result[2],
+                result[3]);
+        System.out.println("Из них прилагательные:");
+        for (String s:adjectives)
+            System.out.printf("%s ",s);
+        System.out.println("\nглаголы:");
+        for (String s:verbs)
+            System.out.printf("%s ",s);
+        System.out.println("\n\nНаречия:");
+        for (String s:adverbs)
+            System.out.printf("%s ",s);
+        System.out.println("\n\nПрочее:");
+        for (String s:other)
+            System.out.printf("%s ",s);
     }
 
     private static String readUsingFiles(String fileName) throws IOException {
@@ -42,7 +70,9 @@ public class TextWatcher {
         return madj.matches();
     }
     public static boolean checkForVerb(String userNameString) {
-        Pattern verb = Pattern.compile("[а-яА-Я]{2,}((ти)|([ауоиыея][ть])|([ияюе]т)|([(ьте)(ай)(рь)(ите)])|([ие](шь)|(те)|м)|([ия]л[аои]{1})$)");
+        Pattern verb = Pattern.compile("[а-яА-Я]{2,}(([(ти)(ри)(юди)]$)|([ауоиыея][ть]$)|([аяиуюое][ияюе]т$)|" +
+                "([(ьте)(ай)(рь)(ите)]$)|(([лнсзмр]а[ую])|[лую]]$)|" +
+                "([ие][(шь)(шу)м]$)|(йте$)|([ияы]л[аои]?)$)");
         Matcher mverb = verb.matcher(userNameString);
         return mverb.matches();
     }
