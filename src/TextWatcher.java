@@ -7,9 +7,10 @@ public class TextWatcher {
         System.out.println(checkWithRegExp("asd"));
         System.out.println(checkWithRegExp("vo"));
         System.out.println(checkWithRegExp("Z@OZA"));
+        System.out.println(checkWithRegExp("change"));
     }
     public static boolean checkWithRegExp(String userNameString){
-        Pattern p = Pattern.compile(".{2,3}");
+        Pattern p = Pattern.compile(".{2,5}");
         Matcher m = p.matcher(userNameString);
         return m.matches();
     }
