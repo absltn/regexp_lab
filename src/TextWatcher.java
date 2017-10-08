@@ -3,15 +3,18 @@ import java.util.regex.Pattern;
 public class TextWatcher {
     public static void main(String[] args){
         System.out.println("Results of checking:");
-        System.out.println(checkWithRegExp("_@BEST"));
-        System.out.println(checkWithRegExp("asd"));
-        System.out.println(checkWithRegExp("vo"));
-        System.out.println(checkWithRegExp("Z@OZA"));
-        System.out.println(checkWithRegExp("change"));
+        System.out.println(checkForAdj("волчей"));
+        System.out.println(checkForVerb("стоял"));
     }
-    public static boolean checkWithRegExp(String userNameString){
-        Pattern p = Pattern.compile(".{2,5}");
-        Matcher m = p.matcher(userNameString);
-        return m.matches();
+    public static boolean checkForAdj(String userNameString) {
+        Pattern adj = Pattern.compile("..+([ео]е|м|му|го|шем])|[иы][ей]|[аиья]я|([ле,не,ше,ще,че,о]й)$");
+        Matcher madj = adj.matcher(userNameString);
+        return madj.matches();
+    }
+    public static boolean checkForVerb(String userNameString){
+        Pattern verb = Pattern.compile("..+(ти)|[ауоиыея]т|лаои?$");
+        Matcher mverb = verb.matcher(userNameString);;
+        return mverb.matches();
     }
 }
+
