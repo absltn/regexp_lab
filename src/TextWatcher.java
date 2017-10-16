@@ -14,6 +14,7 @@ public class TextWatcher {
         int result[]={0,0,0,0};
         String content = null;
         content = readUsingFiles(fileName);
+        System.out.println("Текст для анализа: "+ content+"\n");
         String [] words = content.split ("([\\s/.,/!/?]+)");
         List<String> other = new ArrayList<String>();
         List<String> adverbs = new ArrayList<String>();
@@ -64,26 +65,26 @@ public class TextWatcher {
     }
 
      public static boolean checkForAdj(String userNameString) {
-        Pattern adj = Pattern.compile("[а-яА-Я]{2,}(([оиеы][йем])|([ео][ем(му)(го)])|([аиья]я)|" +
-                "((еле)|(не)|(ше)|(ще)|(че)й)$)");
+        Pattern adj = Pattern.compile("[а-яА-Я]{2,}(([оиеы][йем])$|([ео]м|(му)|(го)$)|([аиья]я$)|" +
+                "((еле)$|(ше)$|(ще)$|(че)$)|([иы]х)$)");
         Matcher madj = adj.matcher(userNameString);
         return madj.matches();
     }
 
     public static boolean checkForVerb(String userNameString) {
-        Pattern verb = Pattern.compile("[а-яА-Я]{2,}(([(ти)(ри)(юди)]$)|([ауоиыея][(ть)(ти)]((ся)?)$)|" +
-                "([аяиуюое][ияюе]т(ся)?$)|" +
-                "([(ьте)(ай)(рь)(ите)]$)|(([лнсзмр]аю$)|([лсзмр][ую]ю)$)|" +
-                "([ие][(шь)(шу)м](ся)?$)|(йте$)|([еияы][(л[аои])л](ся)?)$)");
+        Pattern verb = Pattern.compile("[а-яА-Я]{2,}(((ти)|(ри)|(ги)|(ши)|(юди)(сь)?$)|([ауоиыея](ть)|(ти)((ся)?)$)|" +
+                "([аяиуюое]?^(бл)[ияюе]т(ся)?$)|" +
+                "((ьте)|^(кр)(ай)|(рь)|(ите)$)|(([лнсзмр]аю$)|([лсзмр][ую]ю)$)|" +
+                "([ие](шь)|(шу)|^(та)м(ся)?$)|(йте$)|([еияы](л[аои])л)(ся)?$)");
         Matcher mverb = verb.matcher(userNameString);
         return mverb.matches();
     }
 
     public static boolean checkForAdverb(String userNameString){
-        Pattern adverb = Pattern.compile("[оОсСвВнНпПзЗтТуУдДеЕгГчЧбБ][а-яА-Я]" +
-                "(([елиз(яр)ь](ко))|(ро)|(вчера)|(сегодня)|" +
-                "(завтра)|(сь)|(где)|(вперед)|е|([ае][(во),(ку)])|(перь)|([тп][лрн][оe(ее)])|(ив[о(ее)])|" +
-                "(ев[о(ее)])|([дт]ан)|(ину)|([еяу]ча)$)");
+        Pattern adverb = Pattern.compile("[оОсСвВнНпПзЗтТуУдДеЕгГчЧбБ]*" +
+                "(([елиз(яр)ь](ко$))|(ро$)|(вчера$)|([сС]егодня$)|([тТ]ам$)|([сС]ям$)|(йн[ео]$)" +
+                "([зЗ]автра$)|(сь$)|(где$)|([вВ]перед$)|([ае](во$)|(ку$)|([гГ]де$)|(лько))|(перь)|([тп][лрн][оe(ее)])|" +
+                "(ив[о(ее)])|(ев[о(ее)])|([дт]ан)|(ину)|([еяу]ча)$)");
         Matcher madverb = adverb.matcher(userNameString);
         return madverb.matches();
     }
