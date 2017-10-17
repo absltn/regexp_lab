@@ -65,7 +65,7 @@ public class TextWatcher {
     }
 
      public static boolean checkForAdj(String userNameString) {
-        Pattern adj = Pattern.compile("[а-яА-Я]{2,}(([оиеы][йем])$|([ео]м|(му)|(го)$)|([аиья]я$)|" +
+        Pattern adj = Pattern.compile("[а-яА-Я]{2,}((^з[оиеы][йем])$|([ео]м|(му)|(го)$)|([аиья]я$)|" +
                 "((еле)$|(ше)$|(ще)$|(че)$)|([иы]х)$)");
         Matcher madj = adj.matcher(userNameString);
         return madj.matches();
