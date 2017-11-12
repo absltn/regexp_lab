@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.nio.file.Files;
@@ -10,9 +11,13 @@ import java.util.ArrayList;
 public class TextWatcher {
     public static void main(String[] args) throws IOException {
         System.out.println("Results of checking:");
-        String fileName = "C:/users/airliq/desktop/regTest.txt";
+
+        ResourceBundle bundle = ResourceBundle.getBundle("test");
+        String fileName = bundle.getString("regexp");
+
         int result[]={0,0,0,0};
         String content = null;
+
         content = readUsingFiles(fileName);
         System.out.println("Текст для анализа: "+ content+"\n");
         String [] words = content.split ("([\\s/.,/!/?]+)");
@@ -38,8 +43,8 @@ public class TextWatcher {
                 result[3]++;
                 other.add(words[i]);
             }
-        System.out.printf("В данном тексте примерно %d прилагательных, %d глаголов,\n" +
-                "%d наречий и %d других хоть-сколько значимых слов.\n",result[0],result[1],result[2],
+        System.out.printf("В данном тексте примерно %d прилагательных, %d глаголов,%n" +
+                "%d наречий и %d других хоть-сколько значимых слов.%n",result[0],result[1],result[2],
                 result[3]);
         System.out.println("Из них прилагательные:");
         for (String s:adjectives)
@@ -61,7 +66,7 @@ public class TextWatcher {
         catch (IOException e) {
             e.printStackTrace();
         }
-        return new String(Files.readAllBytes(Paths.get(fileName)));
+        return new String(Files.readAllBytes(Paths.get(fileName)),"UTF-8");
     }
 
      public static boolean checkForAdj(String userNameString) {
